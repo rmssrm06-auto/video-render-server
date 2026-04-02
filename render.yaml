@@ -1,9 +1,9 @@
 services:
   - type: web
     name: video-render-server
-    env: node
-    # This command installs FFmpeg on the server before starting your app.
-    # FFmpeg is what actually combines image + audio into video.
-    buildCommand: apt-get update && apt-get install -y ffmpeg && npm install
-    startCommand: npm start
+    # Instead of a plain Node environment, we use a Docker image
+    # that already has FFmpeg pre-installed. This bypasses the
+    # read-only filesystem restriction entirely.
+    env: docker
+    dockerfilePath: ./Dockerfile
     plan: free
